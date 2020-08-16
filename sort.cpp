@@ -133,7 +133,7 @@ void selectionLinkListVer2(Node** np)
 		tmp = (p->next == min)? p : p->next;
 		p->next = min->next;
 		min->next = tmp;
-		if(p != minPre)
+		if(p != minPre && minPre != NULL)
 			minPre->next = p;
 		// move
 		pPre = min; 	
@@ -791,7 +791,7 @@ int main()
 			
 			puts("linked list ver2:");
 			showList(n);
-			selectionLinkListVer2(np);//////////??????????????????????
+			selectionLinkListVer2(np);
 			puts("selection sort completed!");
 			break;
 			
