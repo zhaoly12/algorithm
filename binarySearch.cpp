@@ -200,6 +200,17 @@ void printLDRVer2(Node* root)
 	printf("\n");
 }
 
+void showTree(Node* root, int layer)
+{
+	if(!root)
+		return;
+	showTree(root->rChild, layer+2);
+	int i;
+	for(i=0;i<layer;printf("   "),i++);
+	printf("%d=>%d\n", root->key, root->value);
+	showTree(root->lChild, layer+2);	
+} 
+
 Node* min(Node* root)
 {
 	if(!root)
@@ -395,8 +406,9 @@ int main()
 		printf("\n");
 	}	
 	printLDRVer2(root); 
-	printf("\n");
-	printf("min is %d=>%d\n", min(root)->key, min(root)->value);
+	printf("\ntree is shown as following:\n");
+	showTree(root, 1);
+	printf("\nmin is %d=>%d\n", min(root)->key, min(root)->value);
 	printf("max is %d=>%d\n", max(root)->key, max(root)->value);
 	int r = 9, key = 1;
 	printf("the No.%d node is %d=>%d\n", r, select(root, r)->key, select(root, r)->value);
@@ -413,6 +425,9 @@ int main()
 		else
 			del(root, d);
 		printLDR(root);
+		printf("\nnow tree becomes: \n");
+		showTree(root, 1);
+		printf("\n");
 	}
 	
 	// clear buffer
