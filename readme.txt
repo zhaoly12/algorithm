@@ -13,3 +13,14 @@ fast sort
         heap sort
               from up to down
               from down to up
+linear time sort
+     count sort
+     bucket sort
+     radix sort
+
+2. search
+    binary search
+    binary search tree
+    
+    
+     
