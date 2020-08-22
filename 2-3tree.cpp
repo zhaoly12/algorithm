@@ -242,13 +242,20 @@ node* get(node* root, int k)
 	{
 		if(root->key[i] == k)
 			return root;
-		else if(root->key[i] > k && root->child[i])
-			return get(root->child[i], k);
+		else if(root->key[i] > k)
+		{
+			if(root->child[i])
+				return get(root->child[i], k);
+			else 
+				return NULL;	
+		}
 		else
 			i++;
 	}
 	if(root->child[i])
 		return get(root->child[i], k);
+	else
+		return NULL;
 }
 
 /*
