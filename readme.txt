@@ -22,7 +22,7 @@ linear time sort
     binary search
     binary search tree
     2-3 search tree
-    (2-3 tree is a kind of balance tree whose M is 3)
+    (2-3 tree is a kind of balance tree whose degree is 3)
     balanced tree
     (balanced tree stores data and key in all nodes)
     B+ tree
@@ -33,6 +33,6 @@ linear time sort
     algorithm: 
            create/traverse/show a 2-3/B/B+ tree
            get the depth/number of leaf nodes of a 2-3/B/B+ tree
-           insert/delete/update/get key=>value into a 2-3/B/B+ tree
+           insert/delete/update/get key=>value into/from a 2-3/B/B+ tree
  
      
