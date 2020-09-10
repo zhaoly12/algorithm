@@ -31,8 +31,12 @@ linear time sort
     (a red-black tree equals to a 2-3 tree and also equals to a binary tree)
 
     algorithm: 
-           create/traverse/show a 2-3/B/B+ tree
-           get the depth/number of leaf nodes of a 2-3/B/B+ tree
-           insert/delete/update/get key=>value into/from a 2-3/B/B+ tree
+           create/traverse/show a 2-3/B/B+/red-black tree
+           get the depth/number of leaf nodes of a 2-3/B/B+/red-black tree
+           insert/delete/update/get key=>value into/from a 2-3/B/B+/red-black tree
  
-     
+3. dynamic algorithm
+
+4. greedy algorithm
+
+   

@@ -663,10 +663,6 @@ void fastSortAll(int* array, int numArray)
 }
 
 // linear sort
-void bucketSort(int* array , int num)
-{
-	
-}
 void countSort(int* array, int num, int min, int max)
 {
 	int* tmp = (int*)malloc((max-min+1)*sizeof(int));
@@ -691,34 +687,86 @@ void countSort(int* array, int num, int min, int max)
 	
 	free(tmp);
 }
-/*
-void radixSort()
+
+// get the number d digit of the number n
+int digit(int n, int d)
 {
-	puts("raidx sort fits strings compare very well.");
-	char** array = (char**)malloc(8*sizeof(char*));
-	array[0] = "01", array[1] = "00", array[2] = "10", array[3] = "09", array[4] = "08", array[5] = "11", array[6] = "02", array[7] = "10";
-	puts("original array:");
-	int i;
-	for(i=0;i<8;i++)
-		printf("%s ", array[i]);
-	puts("Array sorted:");
-	int j = 1, k;
-	char* tmp = (char*)malloc(3*sizeof(char));
-	for(;j>0;j--)
-	{
-		for(i=1;i<8;i++)
-		{
-			for(k=0;k<i;k++)
-			{
-				if(array[i][j] < array[k][j])
-					break;
-			}
-			
-		}
-	}
+	if(d < 1)
+		return -1;
+	int result = n;
+	for(int i=0;i<d-1;i++)
+		result = result/10;
+	return result%10;	
 }
-*/
-void linearSort(int* array, int num, int min, int max)
+
+void radixSort(int* array, int num, int dig)
+{
+	 int d;
+	 int i,j;
+	 int count[10];// 0~9 ten numbers
+	 int cursor[10];
+	 for(d=1;d<=dig;d++)
+	 {
+	 	memset(count, 0, 10*sizeof(int));
+		memset(cursor, -1, 10*sizeof(int));
+	 	// count
+	 	for(i=0;i<num;i++)
+	 	{
+	 		count[digit(array[i], d)]++;	
+		}
+		// generate indices
+		for(i=1;i<10;i++)
+		{
+			count[i] = count[i] + count[i-1];	
+		}
+		// do some adjustment
+		/* 
+		the adjustment here is very important! 
+		because may be there are numbers share the same number in a digit,
+		in this case, the sequence should be the same as the sequence in the last circle!
+		*/
+		for(i=0,j=0;i<10;i++)
+		{
+			if(count[i] != 0)
+				cursor[j] = i, j++;
+		}
+		// sort
+		int tmp[num];
+		int dTmp;
+		int k = 0;
+		for(i=0;i<num;i++)
+		{
+			// find the position
+			dTmp = digit(array[i], d);
+			for(j=0;cursor[j]!=dTmp;j++);
+			if(j==0)
+			{
+				tmp[k] = array[i];	
+				k++;
+			}
+			else
+			{
+				tmp[count[cursor[j-1]]] = array[i]; 
+				count[cursor[j-1]]++;	
+			}
+		}
+		// rewrite
+		for(i=0;i<num;i++)
+			array[i] = tmp[i];
+		// print
+		puts("\nsort:");
+		for(i=0;i<num;i++)
+			printf("%d ", array[i]);
+		printf("\n");
+	 }
+}
+
+void bucketSort(int* array , int num)
+{
+	
+}
+
+void linearSort(int* array, int num, int min, int max, int dig)
 {
 	puts("input a character to choose a method:");
 	puts("bucket sort: 'b', count sort: 'c', radix sort: 'r'");
@@ -736,7 +784,7 @@ void linearSort(int* array, int num, int min, int max)
 		break;
 		
 		case 'r':
-		//radixSort();
+		radixSort(array, num, dig);
 		break;
 				
 		default:
@@ -775,9 +823,9 @@ int main()
 	char buff;
 	while(choice != 'k')
 	{
-		int array[] = {0,1,3,9,1,5,16,3,2, 15,14,13, 11,16,18,20,24,100,25,26,80};
+		int array[] = {0,1,3,9,12,15,16,23,11, 15,14,13, 11,6,48,222,21,100,325,426,18};
 		int numArray = sizeof(array)/sizeof(array[0]);
-		int min = 0, max = 100;
+		int min = 0, max = 426, dig = 3;
 		switch (choice)
 		{
 			case 's':
@@ -831,7 +879,7 @@ int main()
 			case 'l':
 			// linear sort (N)
 			show(array, numArray);
-			linearSort(array, numArray, min, max);
+			linearSort(array, numArray, min, max, dig);
 			show(array, numArray);
 			puts("linear sort completed!");
 			break;
